@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Survey with Continuous Music</title>
+  <style>
+    /* Make iframe fill the viewport */
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      overflow: hidden;
+    }
+    iframe {
+      border: none;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+    /* Optional: controls container */
+    #audio-controls {
+      position: fixed;
+      top: 10px; right: 10px;
+      background: rgba(255,255,255,0.8);
+      padding: 8px;
+      border-radius: 5px;
+      font-family: sans-serif;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background music player -->
+<audio id="bg-music" autoplay loop muted>
+  <source src="https://github.com/ankbal2020-source/audi/blob/main/New Recording 252.m4a" type="audio/mpeg" />
+  Your browser does not support the audio element.
+</audio>
+
+<!-- Optional: Add a button to unmute music -->
+<div id="audio-controls">
+  <button id="toggle-mute">Unmute Music</button>
+</div>
+
+<!-- Embed your Qualtrics survey here -->
+<iframe src="https://ucsantacruz.co1.qualtrics.com/jfe/form/SV_6LLNjdbXZePO43s" allowfullscreen></iframe>
+
+<script>
+  const audio = document.getElementById('bg-music');
+  const muteBtn = document.getElementById('toggle-mute');
+
+  // Initially muted for autoplay to work
+  audio.muted = true;
+
+  muteBtn.addEventListener('click', () => {
+    if (audio.muted) {
+      audio.muted = false;
+      muteBtn.textContent = 'Mute Music';
+    } else {
+      audio.muted = true;
+      muteBtn.textContent = 'Unmute Music';
+    }
+  });
+
+  // Optional: Auto-unmute on first user interaction anywhere on page
+  document.body.addEventListener('click', () => {
+    if (audio.muted) {
+      audio.muted = false;
+      muteBtn.textContent = 'Mute Music';
+    }
+  }, { once: true });
+</script>
+
+</body>
+</html>
