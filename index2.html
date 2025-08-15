@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Survey with Background Music</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+    #audio-controls {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 5px 10px;
+      border-radius: 5px;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎵 Background Music -->
+  <audio id="bg-music" autoplay loop muted>
+    <source src="https://ankbal2020-source.github.io/audi/music.m4a" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- 🎚 Mute/Unmute Controls -->
+  <div id="audio-controls">
+    <button id="mute-btn">Unmute Music</button>
+  </div>
+
+  <!-- 📋 Embedded Survey -->
+  <iframe src="https://ucsantacruz.co1.qualtrics.com/jfe/form/SV_6LLNjdbXZePO43s"></iframe>
+
+  <!-- 🧠 JavaScript -->
+  <script>
+    const audio = document.getElementById('bg-music');
+    const muteBtn = document.getElementById('mute-btn');
+
+    // Toggle mute/unmute on button click
+    muteBtn.addEventListener('click', () => {
+      if (audio.muted) {
+        audio.muted = false;
+        audio.volume = 1.0;
+        audio.play();
+        muteBtn.textContent = 'Mute Music';
+      } else {
+        audio.muted = true;
+        muteBtn.textContent = 'Unmute Music';
+      }
+    });
+
+    // Optional: Auto-unmute on first click
+    document.body.addEventListener('click', () => {
+      if (audio.muted) {
+        audio.muted = false;
+        audio.volume = 1.0;
+        audio.play();
+        muteBtn.textContent = 'Mute Music';
+      }
+    }, { once: true });
+  </script>
+
+</body>
+</html>
