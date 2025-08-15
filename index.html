@@ -45,27 +45,22 @@
 
 <script>
   const audio = document.getElementById('bg-music');
-  const muteBtn = document.getElementById('toggle-mute');
+  const muteBtn = document.getElementById('mute-btn');
 
-  // Initially muted for autoplay to work
-  audio.muted = true;
-
+  // Force play + unmute on button click
   muteBtn.addEventListener('click', () => {
-    if (audio.muted) {
-      audio.muted = false;
-      muteBtn.textContent = 'Mute Music';
-    } else {
-      audio.muted = true;
-      muteBtn.textContent = 'Unmute Music';
-    }
+    audio.muted = false;
+    audio.volume = 1.0;
+    audio.play();
+    muteBtn.textContent = 'Mute';
   });
 
-  // Optional: Auto-unmute on first user interaction anywhere on page
+  // Optional: also auto-unmute on first user click anywhere
   document.body.addEventListener('click', () => {
-    if (audio.muted) {
-      audio.muted = false;
-      muteBtn.textContent = 'Mute Music';
-    }
+    audio.muted = false;
+    audio.volume = 1.0;
+    audio.play();
+    muteBtn.textContent = 'Mute';
   }, { once: true });
 </script>
 
