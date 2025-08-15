@@ -48,27 +48,29 @@
 
   <!-- 🧠 JavaScript to handle unmuting -->
   <script>
-    const audio = document.getElementById('bg-music');
-    const muteBtn = document.getElementById('mute-btn');
+  const audio = document.getElementById('bg-music');
+  const muteBtn = document.getElementById('mute-btn');
 
-    // Force unmute and play on button click
-    muteBtn.addEventListener('click', () => {
+  // Set initial button label
+  muteBtn.textContent = audio.muted ? 'Unmute Music' : 'Mute Music';
+
+  // Toggle mute state on button click
+  muteBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    if (!audio.paused) {
+      audio.volume = audio.muted ? 0 : 1.0;
+    }
+    muteBtn.textContent = audio.muted ? 'Unmute Music' : 'Mute Music';
+  });
+
+  // Optional: Auto-unmute on first interaction
+  document.body.addEventListener('click', () => {
+    if (audio.muted) {
       audio.muted = false;
       audio.volume = 1.0;
-      audio.play().catch(err => console.warn('Audio play error:', err));
       muteBtn.textContent = 'Mute Music';
-    });
-
-    // Optional: auto-unmute on first click anywhere
-    document.body.addEventListener('click', () => {
-      if (audio.muted) {
-        audio.muted = false;
-        audio.volume = 1.0;
-        audio.play().catch(err => console.warn('Audio play error:', err));
-        muteBtn.textContent = 'Mute Music';
-      }
-    }, { once: true });
-  </script>
-
+    }
+  }, { once: true });
+</script>
 </body>
 </html>
