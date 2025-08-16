@@ -71,6 +71,16 @@
         alert("Please unmute or allow audio in your browser.");
       });
     });
+      // Mute/Unmute toggle
+    muteButton.addEventListener('click', () => {
+      if (bgMusic.muted) {
+        bgMusic.muted = false;
+        muteButton.innerText = 'Mute';
+      } else {
+        bgMusic.muted = true;
+        muteButton.innerText = 'Unmute';
+      }
+    });
   </script>
 
 </body>
