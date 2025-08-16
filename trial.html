@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Qualtrics Survey with Background Music</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    #start-container {
+      padding: 100px 20px;
+    }
+
+    #survey-container {
+      display: none;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100vh;
+      border: none;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Start Button Container -->
+  <div id="start-container">
+    <h2>Welcome to the Survey</h2>
+    <p>Click the button below to begin and enable background music.</p>
+    <button id="startButton">Start Survey</button>
+  </div>
+
+  <!-- Survey and Audio Container -->
+  <div id="survey-container">
+    <!-- Background Music -->
+    <audio id="bgMusic" src="https://ankbal2020-source.github.io/audi/music.mp3" loop></audio>
+
+    <!-- Qualtrics Survey Embed -->
+    <iframe
+      src="https://ucsantacruz.co1.qualtrics.com/jfe/form/SV_6LLNjdbXZePO43s"
+      allow="autoplay"
+    ></iframe>
+  </div>
+
+  <script>
+    const startButton = document.getElementById('startButton');
+    const surveyContainer = document.getElementById('survey-container');
+    const startContainer = document.getElementById('start-container');
+    const bgMusic = document.getElementById('bgMusic');
+    const muteBtn = document.getElementById('mute-btn');
+    
+    // Toggle mute/unmute on button click
+    muteBtn.addEventListener('click', () => {
+      if (audio.muted) {
+        audio.muted = false;
+        audio.volume = 1.0;
+        audio.play();
+        muteBtn.textContent = 'Mute Music';
+      } else {
+        audio.muted = true;
+        muteBtn.textContent = 'Unmute Music';
+      }
+    });
+
+
+    startButton.addEventListener('click', () => {
+      // Show the survey container
+      surveyContainer.style.display = 'block';
+      // Hide the start button
+      startContainer.style.display = 'none';
+
+      // Try to play the music
+      bgMusic.play().catch((err) => {
+        console.error("Autoplay failed:", err);
+        alert("Please unmute or allow audio in your browser.");
+      });
+    });
+    
+  </script>
+
+</body>
+</html>
