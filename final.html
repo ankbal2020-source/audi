@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Qualtrics Survey with Background Music</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    #start-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    #survey-container {
+      display: none;
+    }
+
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+    }
+
+    #muteButton {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 9999;
+      background-color: rgba(255, 255, 255, 0.8);
+      color: #333;
+      font-size: 16px;
+      padding: 8px 14px;
+      border-radius: 5px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Start Screen -->
+  <div id="start-container">
+    <h2>Welcome to the Survey</h2>
+    <p>Click the button below to begin and enable background music.</p>
+    <button id="startButton">Start Survey</button>
+  </div>
+
+  <!-- Survey and Music Section -->
+  <div id="survey-container">
+    <audio id="bgMusic" src="https://ankbal2020-source.github.io/audi/music.mp3" loop></audio>
+    <button id="muteButton">Mute</button>
+    <iframe
+      src="https://ucsantacruz.co1.qualtrics.com/jfe/form/SV_6LLNjdbXZePO43s"
+      allow="autoplay"
+    ></iframe>
+  </div>
+
+  <script>
+    const startButton = document.getElementById('startButton');
+    const startContainer = document.getElementById('start-container');
+    const surveyContainer = document.getElementById('survey-container');
+    const muteButton = document.getElementById('muteButton');
+    const bgMusic = document.getElementById('bgMusic');
+
+    // Set how long music should play (in seconds)
+    const musicDuration = 150; // ⏱ change this as needed
+
+    let musicStopTimeout;
+
+    startButton.addEventListener('click', () => {
+      // Show survey and mute button
+      surveyContainer.style.display = 'block';
+      startContainer.style.display = 'none';
+      muteButton.style.display = 'inline-block';
+
+      // Try to play music
+      bgMusic.play().catch(err => {
+        console.warn("Autoplay may be blocked:", err);
+        alert("Please enable sound in your browser if music does not play.");
+      });
+
+      // Stop music after X seconds
+      musicStopTimeout = setTimeout(() => {
+        bgMusic.pause();
+        bgMusic.currentTime = 0;
+        muteButton.style.display = 'none';
+      }, musicDuration * 1000);
+    });
+
+    // Mute/Unmute toggle
+    muteButton.addEventListener('click', () => {
+      bgMusic.muted = !bgMusic.muted;
+      muteButton.innerText = bgMusic.muted ? 'Unmute' : 'Mute';
+    });
+  </script>
+
+</body>
+</html>
